@@ -1,7 +1,10 @@
-class laboratory {
+package lab1;
 
-  static void compulsory() {
-    String languages[] = { "C", "C++", "C#", "Python", "Go", "Rust", "JavaScript", "PHP", "Swift", "Java" };
+public class compulsory {
+
+  public static void main(String[] args) {
+    String languages[] = { "C", "C++", "C#", "Python", "Go",
+        "Rust", "JavaScript", "PHP", "Swift", "Java" };
 
     int n = (int) (Math.random() * 1_000_000);
     n *= 3;
@@ -22,17 +25,5 @@ class laboratory {
     System.out.println(
         "Willy-nilly, this semester I will learn " +
             languages[result]);
-  }
-
-  static void homework() {
-  }
-
-  static void bonus() {
-  }
-
-  public static void main(String[] args) {
-    compulsory();
-    homework();
-    bonus();
   }
 }
