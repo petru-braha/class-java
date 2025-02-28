@@ -38,7 +38,11 @@ public class homework {
   // white == no edge
   static final char COLOR_WHITE = 0x25A0;
   static final char COLOR_BLACK = 0x25A1;
-  static final int LARGE_SIZE = 30;
+  static final int SIZE_SMALL = 30;
+  static final int SIZE_NORMAL = 5_000;
+  static final int SIZE_LARGE = 30_000;
+
+  static final long TO_SECOND = 1_000_000_000;
 
   static int generate_k_clique(char[][] matrix,
       final int[] positions,
@@ -86,15 +90,20 @@ public class homework {
 
     int m = 0;
     for (int i = 2 * k; i < n; i++)
-      for (int j = 0; j < n; j++) {
-        if (i == j)
-          continue;
-
+      for (int j = 0; j < 2 * k; j++) {
         int v0 = positions[i], v1 = positions[j];
-        if (COLOR_BLACK == matrix[v0][v1] ||
-            COLOR_BLACK == matrix[v1][v0])
-          continue;
+        matrix[v0][v1] = matrix[v1][v0] = generation.g(
+            COLOR_WHITE, (char) (COLOR_BLACK + 1));
+        if (COLOR_BLACK == matrix[v0][v1]) {
+          degrees[v0]++;
+          degrees[v1]++;
+          m++;
+        }
+      }
 
+    for (int i = 2 * k; i < n; i++)
+      for (int j = i + 1; j < n; j++) {
+        int v0 = positions[i], v1 = positions[j];
         matrix[v0][v1] = matrix[v1][v0] = generation.g(
             COLOR_WHITE, (char) (COLOR_BLACK + 1));
         if (COLOR_BLACK == matrix[v0][v1]) {
@@ -109,7 +118,7 @@ public class homework {
 
   static void print_adjancy(char[][] matrix) {
     for (int i = 0; i < matrix.length; i++) {
-      for (int j = 0; j < matrix[i].length; j++) {
+      for (int j = 0; j < matrix.length; j++) {
         System.out.print(matrix[i][j]);
         System.out.print(" ");
       }
@@ -143,7 +152,7 @@ public class homework {
 
   static void print_information(final char[][] matrix,
       final int n, final int m, final int[] degrees) {
-    if (n < LARGE_SIZE)
+    if (n < SIZE_SMALL)
       print_adjancy(matrix);
 
     System.out.print("the number of edges is ");
@@ -153,6 +162,11 @@ public class homework {
   }
 
   public static void main(String[] args) {
+
+    if (2 != args.length) {
+      System.out.println("error: wrong number of args");
+      return;
+    }
 
     final int n = Integer.parseInt(args[0]),
         k = Integer.parseInt(args[1]);
@@ -184,11 +198,11 @@ public class homework {
 
     // the required graph here is completely generated
     print_information(matrix, n, m, degrees);
-    if (n < LARGE_SIZE)
+    if (n < SIZE_SMALL)
       return;
-    time = System.nanoTime() - time;
+
     System.out.print("running time in seconds: ");
-    System.out.println(time / 1_000_000_000);
+    System.out.println((System.nanoTime() - time) / TO_SECOND);
 
     // tried: n > 30_000 - it never stops
     // use this: java -Xms4G -Xmx4G lab1.homework 5000 4

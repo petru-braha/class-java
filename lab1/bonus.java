@@ -1,0 +1,110 @@
+package lab1;
+
+public class bonus {
+
+  static char PROPERTY_CLIQUE = homework.COLOR_BLACK;
+  static char PROPERTY_STABLE = homework.COLOR_WHITE;
+
+  public static char[][] default_random_matrix(final int n) {
+
+    char[][] matrix = new char[n][n];
+    for (int i = 0; i < matrix.length; i++) {
+      matrix[i][i] = homework.COLOR_WHITE;
+
+      for (int j = i + 1; j < matrix.length; j++) {
+        matrix[i][j] = matrix[j][i] = generation.g(
+            homework.COLOR_WHITE,
+            (char) (homework.COLOR_BLACK + 1));
+      }
+    }
+
+    return matrix;
+  }
+
+  static boolean is_valid(final char[][] matrix,
+      final boolean[] selected, final int v,
+      final char property) {
+
+    for (int i = 0; i < selected.length; i++)
+      if (selected[i] &&
+          matrix[i][v] != property)
+        return false;
+
+    return true;
+  }
+
+  static boolean find_property(final char[][] matrix, final int k,
+      final int start, boolean[] selected, final int count,
+      final char property) {
+
+    if (count == k)
+      return true;
+
+    for (int i = start; i < matrix.length; i++) {
+      if (false == is_valid(matrix, selected, i, property))
+        continue;
+
+      selected[i] = true;
+      if (find_property(matrix, k,
+          i + 1, selected, count + 1, property))
+        return true;
+      selected[i] = false;
+    }
+
+    return false;
+  }
+
+  /*
+   * takes as arguments: k and
+   * the number of random matrices to be verified
+   */
+  public static void main(String[] args) {
+
+    if (2 != args.length) {
+      System.out.println("error: wrong number of args");
+      return;
+    }
+
+    final int k = Integer.parseInt(args[0]),
+        count_iteration = Integer.parseInt(args[1]);
+
+    if (k < 1 || k >= homework.SIZE_NORMAL ||
+        count_iteration < 1) {
+      System.out.println("error: argument is not valid");
+      return;
+    }
+
+    for (int i = 0; i < count_iteration; i++) {
+      System.out.print("case ");
+      System.out.print(i);
+
+      long time = System.nanoTime();
+
+      final int n = generation.g(k, homework.SIZE_SMALL);
+      System.out.print(": n == ");
+      System.out.println(n);
+
+      char[][] matrix = default_random_matrix(n);
+      if (n < homework.SIZE_SMALL)
+        homework.print_adjancy(matrix);
+      else {
+        System.out.print("running time in seconds: ");
+        System.out.println(
+            (System.nanoTime() - time) / homework.TO_SECOND);
+      }
+
+      System.out.print("the generated matrix has ");
+      if (false == find_property(matrix, k,
+          0, new boolean[matrix.length], 0,
+          PROPERTY_CLIQUE))
+        System.out.print("NO ");
+      System.out.print("k-clique and ");
+
+      if (false == find_property(matrix, k,
+          0, new boolean[matrix.length], 0,
+          PROPERTY_STABLE))
+        System.out.print("NO ");
+      System.out.println("k-stable-set!\n");
+    }
+  }
+}
