@@ -33,12 +33,17 @@ public class bonus {
     return true;
   }
 
+  /* prints to screen! */
   static boolean find_property(final char[][] matrix, final int k,
       final int start, boolean[] selected, final int count,
       final char property) {
 
-    if (count == k)
+    if (count == k) {
+      for (int i = 0; i < selected.length; i++)
+        if (selected[i])
+          System.out.printf("%d ", i);
       return true;
+    }
 
     for (int i = start; i < matrix.length; i++) {
       if (false == is_valid(matrix, selected, i, property))
@@ -57,6 +62,9 @@ public class bonus {
   /*
    * takes as arguments: k and
    * the number of random matrices to be verified
+   * recommandation: run with 5 5
+   * backtracking is involved
+   * a faster algorithm is expected to be uploaded
    */
   public static void main(String[] args) {
 
@@ -66,23 +74,24 @@ public class bonus {
     }
 
     final int k = Integer.parseInt(args[0]),
-        count_iteration = Integer.parseInt(args[1]);
+        count_cases = Integer.parseInt(args[1]);
 
     if (k < 1 || k >= homework.SIZE_NORMAL ||
-        count_iteration < 1) {
+        count_cases < 1) {
       System.out.println("error: argument is not valid");
       return;
     }
 
-    for (int i = 0; i < count_iteration; i++) {
-      System.out.print("case ");
-      System.out.print(i);
-
+    for (int i = 0; i < count_cases; i++) {
       long time = System.nanoTime();
 
-      final int n = generation.g(k, homework.SIZE_SMALL);
-      System.out.print(": n == ");
-      System.out.println(n);
+      // for a guided experience SIZE_SMALL is used
+      final int n;
+      if (k < homework.SIZE_SMALL / 3)
+        n = generation.g(k, homework.SIZE_SMALL);
+      else
+        n = generation.g(k, homework.SIZE_NORMAL);
+      System.out.printf("case %d: n == %d\n", i, n);
 
       char[][] matrix = default_random_matrix(n);
       if (n < homework.SIZE_SMALL)
@@ -93,18 +102,23 @@ public class bonus {
             (System.nanoTime() - time) / homework.TO_SECOND);
       }
 
-      System.out.print("the generated matrix has ");
-      if (false == find_property(matrix, k,
+      boolean result = find_property(matrix, k,
           0, new boolean[matrix.length], 0,
-          PROPERTY_CLIQUE))
-        System.out.print("NO ");
-      System.out.print("k-clique and ");
+          PROPERTY_CLIQUE);
 
-      if (false == find_property(matrix, k,
+      if (result)
+        System.out.println("are the nodes of the k_clique");
+      else
+        System.out.println("there is no k_clique");
+
+      result = find_property(matrix, k,
           0, new boolean[matrix.length], 0,
-          PROPERTY_STABLE))
-        System.out.print("NO ");
-      System.out.println("k-stable-set!\n");
+          PROPERTY_STABLE);
+
+      if (result)
+        System.out.println("are the nodes of the stable_set\n");
+      else
+        System.out.println("there is no stable_set\n");
     }
   }
 }
