@@ -1,4 +1,4 @@
-// some test cases for k = 5, count_iteration = 5, n_max = SIZE_SMALL(30m and not 5_000)
+// test for k = 5, count_iteration = 5, n_max = SIZE_SMALL(30m and not 5_000)
 // obviously n_min = k
 
 case 0: n == 15
