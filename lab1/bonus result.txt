@@ -1,6 +1,9 @@
 // test for k = 5, count_iteration = 5, n_max = SIZE_SMALL(30m and not 5_000)
 // obviously n_min = k
 
+// be aware of large dimensions: for k >= 10, n = 1832
+// running time can surpass 384 seconds
+
 case 0: n == 15
 ■ □ ■ □ ■ □ □ ■ □ □ ■ ■ □ □ ■ 
 □ ■ □ ■ ■ ■ □ □ ■ □ □ ■ ■ ■ □ 

@@ -65,7 +65,6 @@ public class bonus {
       the number of random matrices to be verified
    * backtracking is involved
    * a faster algorithm is expected to be uploaded
-   * todo: there might be a bug in recursion
    */
   public static void main(String[] args) {
 
