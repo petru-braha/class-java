@@ -60,11 +60,12 @@ public class bonus {
   }
 
   /*
-   * takes as arguments: k and
-   * the number of random matrices to be verified
    * recommandation: run with 5 5
+   * takes as arguments: k and
+      the number of random matrices to be verified
    * backtracking is involved
    * a faster algorithm is expected to be uploaded
+   * todo: there might be a bug in recursion
    */
   public static void main(String[] args) {
 
@@ -94,13 +95,6 @@ public class bonus {
       System.out.printf("case %d: n == %d\n", i, n);
 
       char[][] matrix = default_random_matrix(n);
-      if (n < homework.SIZE_SMALL)
-        homework.print_adjancy(matrix);
-      else {
-        System.out.print("running time in seconds: ");
-        System.out.println(
-            (System.nanoTime() - time) / homework.TO_SECOND);
-      }
 
       boolean result = find_property(matrix, k,
           0, new boolean[matrix.length], 0,
@@ -116,9 +110,17 @@ public class bonus {
           PROPERTY_STABLE);
 
       if (result)
-        System.out.println("are the nodes of the stable_set\n");
+        System.out.println("are the nodes of the stable_set");
       else
-        System.out.println("there is no stable_set\n");
+        System.out.println("there is no stable_set");
+
+      if (n < homework.SIZE_SMALL)
+        homework.print_adjancy(matrix);
+      else
+        System.out.printf("running time in seconds: %d\n",
+            (System.nanoTime() - time) / homework.TO_SECOND);
+      System.out.print("\n");
+
     }
   }
 }

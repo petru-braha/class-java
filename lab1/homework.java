@@ -16,7 +16,9 @@ class generation {
     return utility.nextInt(startInclusive, endExclusive);
   }
 
-  /* selects k random values from k in O(k) */
+  /* selects k random values from n in O(k) 
+   * behaves similarly to a random permutation
+   */
   public static void select(final int k, int[] results) {
     if (k >= results.length) {
       System.out.println("warning: select() failed");
