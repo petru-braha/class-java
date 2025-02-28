@@ -3,25 +3,21 @@ package lab1;
 import java.util.Random;
 import java.util.stream.IntStream;
 
-public class homework {
-
-  // white == no edge
-  static final char COLOR_BLACK = 0x25A0;
-  static final char COLOR_WHITE = 0x25A1;
+class generation {
 
   /* generates random number within this range */
-  static char g(final char startInclusive, final char endExclusive) {
+  public static char g(final char startInclusive, final char endExclusive) {
     Random utility = new Random();
     return (char) utility.nextInt(startInclusive, endExclusive);
   }
 
-  static int g(final int startInclusive, final int endExclusive) {
+  public static int g(final int startInclusive, final int endExclusive) {
     Random utility = new Random();
     return utility.nextInt(startInclusive, endExclusive);
   }
 
   /* selects k random values from k in O(k) */
-  static void select(final int k, int[] results) {
+  public static void select(final int k, int[] results) {
     if (k >= results.length) {
       System.out.println("warning: select() failed");
       return;
@@ -35,6 +31,81 @@ public class homework {
       results[it_index_array] = answer;
     }
   }
+}
+
+public class homework {
+
+  // white == no edge
+  static final char COLOR_WHITE = 0x25A0;
+  static final char COLOR_BLACK = 0x25A1;
+  static final int LARGE_SIZE = 30;
+
+  static int generate_k_clique(char[][] matrix,
+      final int[] positions,
+      final int k, int[] degrees) {
+
+    int m = 0;
+    for (int i = 0; i < k; i++)
+      for (int j = 0; j < k; j++) {
+        if (i == j)
+          continue;
+
+        int v0 = positions[i], v1 = positions[j];
+        matrix[v0][v1] = matrix[v1][v0] = COLOR_BLACK;
+        degrees[v0]++;
+        degrees[v1]++;
+        m++;
+      }
+
+    return m;
+  }
+
+  static int generate_stable_set(char[][] matrix,
+      final int[] positions,
+      final int k, int[] degrees) {
+
+    int m = 0;
+    for (int i = k; i < 2 * k; i++)
+      for (int j = 0; j < k; j++) {
+        int v0 = positions[i], v1 = positions[j];
+        matrix[v0][v1] = matrix[v1][v0] = generation.g(
+            COLOR_WHITE, (char) (COLOR_BLACK + 1));
+        if (COLOR_BLACK == matrix[v0][v1]) {
+          degrees[v0]++;
+          degrees[v1]++;
+          m++;
+        }
+      }
+
+    return m;
+  }
+
+  static int generate_additional_edges(char[][] matrix,
+      final int[] positions, final int k,
+      final int n, int[] degrees) {
+
+    int m = 0;
+    for (int i = 2 * k; i < n; i++)
+      for (int j = 0; j < n; j++) {
+        if (i == j)
+          continue;
+
+        int v0 = positions[i], v1 = positions[j];
+        if (COLOR_BLACK == matrix[v0][v1] ||
+            COLOR_BLACK == matrix[v1][v0])
+          continue;
+
+        matrix[v0][v1] = matrix[v1][v0] = generation.g(
+            COLOR_WHITE, (char) (COLOR_BLACK + 1));
+        if (COLOR_BLACK == matrix[v0][v1]) {
+          degrees[v0]++;
+          degrees[v1]++;
+          m++;
+        }
+      }
+
+    return m;
+  }
 
   static void print_adjancy(char[][] matrix) {
     for (int i = 0; i < matrix.length; i++) {
@@ -47,6 +118,40 @@ public class homework {
     }
   }
 
+  static void print_degrees(final int[] degrees, final int m) {
+    int maximum_degree = degrees[0],
+        minimum_degree = degrees[0],
+        sum_degree = degrees[0];
+    for (int i = 1; i < degrees.length; i++) {
+      if (degrees[i] > maximum_degree)
+        maximum_degree = degrees[i];
+      if (degrees[i] < minimum_degree)
+        minimum_degree = degrees[i];
+      sum_degree += degrees[i];
+    }
+
+    System.out.print("the maximum degree of a vertex is ");
+    System.out.println(maximum_degree);
+    System.out.print("the minimum degree of a vertex is ");
+    System.out.println(minimum_degree);
+
+    if (m * 2 == sum_degree)
+      System.out.println("the sum of the degrees equals the value 2 * m");
+    else
+      System.out.println("verification failed!");
+  }
+
+  static void print_information(final char[][] matrix,
+      final int n, final int m, final int[] degrees) {
+    if (n < LARGE_SIZE)
+      print_adjancy(matrix);
+
+    System.out.print("the number of edges is ");
+    System.out.println(m);
+
+    print_degrees(degrees, m);
+  }
+
   public static void main(String[] args) {
 
     final int n = Integer.parseInt(args[0]),
@@ -57,35 +162,35 @@ public class homework {
       return;
     }
 
+    // data declaration
+    long time = System.nanoTime();
+    int m = 0;
+    int[] degrees = new int[n];
+    for (int i = 0; i < n; i++)
+      degrees[i] = 0;
+
     char[][] matrix = new char[n][n];
     for (int i = 0; i < n; i++)
       for (int j = 0; j < n; j++)
         matrix[i][j] = COLOR_WHITE;
 
     // generate at random k-clique and stable-sets
-    int[] positions = IntStream.range(0, n + 1).toArray();
-    select(k * 2, positions);
+    int[] positions = IntStream.range(0, n).toArray();
+    generation.select(k * 2, positions);
 
-    // k-clique
-    for (int i = 0; i < k; i++)
-      for (int j = 0; j < k; j++)
-        if (i != j)
-          matrix[i][j] = matrix[j][i] = COLOR_BLACK;
-
-    // stable-set
-    for (int i = k; i < 2 * k; i++)
-      for (int j = k; j < 2 * k; j++)
-        if (i != j)
-          matrix[i][j] = matrix[j][i] = COLOR_WHITE;
-
-    // the other nodes
-    for (int i = 2 * k; i < n; i++)
-      for (int j = 0; j < n; j++)
-        if (i != j)
-          matrix[i][j] = matrix[j][i] = g(
-              COLOR_BLACK, (char) (COLOR_WHITE + 1));
+    m += generate_k_clique(matrix, positions, k, degrees);
+    m += generate_stable_set(matrix, positions, k, degrees);
+    m += generate_additional_edges(matrix, positions, k, n, degrees);
 
     // the required graph here is completely generated
-    print_adjancy(matrix);
+    print_information(matrix, n, m, degrees);
+    if (n < LARGE_SIZE)
+      return;
+    time = System.nanoTime() - time;
+    System.out.print("running time in seconds: ");
+    System.out.println(time / 1_000_000_000);
+
+    // tried: n > 30_000 - it never stops
+    // use this: java -Xms4G -Xmx4G lab1.homework 5000 4
   }
 }
