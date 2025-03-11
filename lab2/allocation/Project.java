@@ -2,18 +2,28 @@ package lab2.allocation;
 
 public class Project {
 
-  private final ProjectType type;
   private final int id;
-  private int mStudent;
+  private final ProjectType type;
 
-  public Project(final ProjectType pType, final int pId) {
+  private Student mStudent;
+  private Teacher mTeacher;
+
+  public Project(final ProjectType pType, final int pId,
+      final Student pSt, final Teacher pTh) {
     type = pType;
     id = pId;
-    mStudent = -1;
+    mStudent = pSt;
+    mTeacher = pTh;
   }
 
-  public void setStudent(final int id) {
-    mStudent = id;
+  // default modifier - only allocation package can call this
+  void setStudent(final Student pStudent) {
+    mStudent = pStudent;
+  }
+
+  // default modifier - only allocation package can call this
+  void setTeacher(final Teacher pTeacher){
+    mTeacher = pTeacher;
   }
 
   public int getId() {
@@ -24,8 +34,12 @@ public class Project {
     return type;
   }
 
-  public int getStudent() {
+  public Student getStudent() {
     return mStudent;
+  }
+
+  public Teacher getTeacher() {
+    return mTeacher;
   }
 
   @Override
@@ -38,9 +52,9 @@ public class Project {
     else
       build.append("practical; ");
 
-    if (-1 != mStudent)
+    if (null != mStudent)
       build.append("selected by the student: ")
-          .append(Integer.toString(mStudent))
+          .append(Integer.toString(mStudent.getId()))
           .append(";");
     else
       build.append("was not selected;");

@@ -1,76 +1,76 @@
 package lab2.allocation;
 
-public class Student {
+/* preferences can be updated but not inserted */
+public class Student extends Person {
 
-  private final int id;
   private int[] projectPreferences;
-  private int countPreferences;
   private Project mProject;
 
-  public Student(final int pId) {
-    id = pId;
-    projectPreferences = new int[10];
-    countPreferences = 0;
+  static private int availableId = 1000;
+  private int registrationNumber;
+
+  public Student(final int pName, final int pBirth,
+      final int[] pref, final Project proj) {
+
+    super(pName, pBirth);
+
+    projectPreferences = pref;
+    if (null == pref)
+      System.out.printf("error: Student() received null.\n");
     mProject = null;
+
+    registrationNumber = availableId;
+    availableId++;
   }
 
-  public Student(final int pId, final int[] pProjectPreferences) {
-    id = pId;
-    projectPreferences = pProjectPreferences;
-    countPreferences = pProjectPreferences.length;
-    mProject = null;
+  public void setPreferences(final int[] pref) {
+    if (null != pref)
+      projectPreferences = pref;
+    else
+      System.out.printf("error: Student() received null.\n");
   }
 
-  public void setPreferences(final int[] pProjectPreferences) {
-    projectPreferences = pProjectPreferences;
-    countPreferences = projectPreferences.length;
-  }
+  @Override
+  public boolean equals(Object pProject) {
 
-  public void addPreference(int preference) {
-
-    if (countPreferences + 1 == projectPreferences.length) {
-      int[] temp = projectPreferences;
-      projectPreferences = new int[2 * countPreferences];
-      for (int i = 0; i < countPreferences; i++)
-        projectPreferences[i] = temp[i];
+    if (!(pProject instanceof Project)) {
+      System.out.printf("error: Student equals failed - %s.\n",
+          "wrong type of instance");
+      return false;
     }
 
-    projectPreferences[countPreferences++] = preference;
-  }
-
-  public void select(final Project pProject) {
-
-    if (-1 != pProject.getStudent()) {
-      System.out.printf("error: project %d was already selected.\n",
-          pProject.getId());
-      return;
+    Project temp = (Project) pProject;
+    if (temp.getStudent() != null) {
+      System.out.printf("error: Student equals failed - %s.\n",
+          "already assigned project");
+      return false;
     }
 
-    mProject = pProject;
-    mProject.setStudent(id);
-  }
-
-  public int getId() {
-    return id;
+    if (null != mProject)
+      mProject.setStudent(null);
+    mProject = temp;
+    mProject.setStudent(this);
+    return true;
   }
 
   public int[] getPreferences() {
     return projectPreferences;
   }
 
-  public int getCount() {
-    return countPreferences;
-  }
-
   public Project getProject() {
     return mProject;
   }
 
+  public int getId() {
+    return registrationNumber;
+  }
+
   @Override
   public String toString() {
-    StringBuilder build = new StringBuilder("student name: ");
-    build.append(Integer.toString(id)).append("; preferences:");
-    for (int i = 0; i < countPreferences; i++)
+
+    StringBuilder build = new StringBuilder("student id: ");
+    build.append(Integer.toString(registrationNumber)).append("; preferences:");
+    for (int i = 0; i < projectPreferences.length; i++)
       build.append(" ").append(Integer.toString(projectPreferences[i]));
     build.append("; ");
     if (null != mProject)
