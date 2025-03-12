@@ -39,20 +39,13 @@ public class compulsory {
     s2.equals((Object) p0); // bad
     System.out.println("end tests.\n");
 
-    System.out.printf("print project details:\n");
-    System.out.println(p0.toString());
-    System.out.println(p1.toString());
-    System.out.println(p2.toString());
-    System.out.printf("\n");
+    System.out.printf("print project details:\n%s\n%s\n%s\n\n",
+        p0.toString(), p1.toString(), p2.toString());
 
-    System.out.printf("print student details:\n");
-    System.out.println(s0.toString());
-    System.out.println(s1.toString());
-    System.out.println(s2.toString());
-    System.out.printf("\n");
-  
-    System.out.printf("print teacher details:\n");
-    System.out.println(t0.toString());
-    System.out.println(t1.toString());
+    System.out.printf("print student details:\n%s\n%s\n%s\n\n",
+        s0.toString(), s1.toString(), s2.toString());
+
+    System.out.printf("print teacher details:\n%s\n%s\n\n",
+        t0.toString(), t1.toString());
   }
 }

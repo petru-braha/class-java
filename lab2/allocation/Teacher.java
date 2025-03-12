@@ -9,11 +9,13 @@ public class Teacher extends Person {
       final Project[] pref) {
 
     super(pName, pBirth);
-
     projectProposals = pref;
     if (null == pref)
-      System.out.printf("error: Teacher() failed - %s.\n",
+      System.out.printf("warning: Teacher() - %s.\n",
           "received null");
+    else
+      for (int i = 0; i < pref.length; i++)
+        pref[i].setTeacher(this);
   }
 
   @Override

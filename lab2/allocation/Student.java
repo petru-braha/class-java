@@ -13,14 +13,15 @@ public class Student extends Person {
       final int[] pref, final Project proj) {
 
     super(pName, pBirth);
-
     projectPreferences = pref;
-    if (null == pref)
-      System.out.printf("error: Student() received null.\n");
-    mProject = null;
-
+    mProject = proj;
     registrationNumber = availableId;
     availableId++;
+
+    if (null == projectPreferences)
+      System.out.println("warning: Student() received null.");
+    if (null != mProject)
+      mProject.setStudent(this);
   }
 
   public void setPreferences(final int[] pref) {
