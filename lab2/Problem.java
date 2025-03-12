@@ -40,8 +40,8 @@ public class Problem {
     for (int t = 0, prev = 0; t < ct && prev < ct; t++, prev++) {
 
       int next = Generation.g(prev, prev + factor + 1);
-      if (next >= ct)
-        next = ct - 1;
+      if (next >= arrayProject.length)
+        next = arrayProject.length - 1;
 
       Project[] proposals = new Project[next - prev + 1];
       for (int p = 0; p < proposals.length; p++)
@@ -89,6 +89,17 @@ public class Problem {
     int ct = Generation.g(seed - seed / 2, seed + seed / 2);
     arrayTeacher = new Teacher[ct];
     generateTeacher(cp, ct, arrayProject);
+
+    // todo when project finish up faster than teachers =>null
+    for (int i = 0; i < arrayProject.length; i++)
+      System.out.printf("%s\n", arrayProject[i].toString());
+    System.out.printf("\n");
+    for (int i = 0; i < arrayStudent.length; i++)
+      System.out.printf("%s\n", arrayStudent[i].toString());
+    System.out.printf("\n");
+    for (int i = 0; i < arrayTeacher.length; i++)
+      System.out.printf("%s\n", arrayTeacher[i].toString());
+    System.out.printf("\n");
   }
 
   public void printPeople() {

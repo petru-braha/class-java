@@ -33,7 +33,7 @@ public class Generation {
    */
   public static void select(final int k, int[] results) {
 
-    if (k >= results.length) {
+    if (k > results.length) {
       System.out.println("warning: select() failed");
       return;
     }
@@ -49,7 +49,7 @@ public class Generation {
 
   public static <T> void select(final int k, T[] results) {
 
-    if (k >= results.length) {
+    if (k > results.length) {
       System.out.println("warning: select() failed");
       return;
     }

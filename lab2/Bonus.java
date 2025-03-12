@@ -39,20 +39,25 @@ public class Bonus {
 
   public static void main(String[] args) {
 
-    //Problem p0 = new Problem(5);
-    
-    if (args.length > 1) {
-      System.out.printf("error: bonus failed - %s.\n",
-          "too many arguments");
-      return;
-    }
+    Problem p0 = new Problem(5);
+    // Solution s0 = new Solution(p0);
 
-    int seed = 5;
-    if (args.length == 1)
-      seed = Integer.parseInt(args[0]);
-
-    greedyExample(seed);
-    backtrackExample(seed);
-    hopcroftKarpExample(seed);
+    /*
+     * 
+     * 
+     * if (args.length > 1) {
+     * System.out.printf("error: bonus failed - %s.\n",
+     * "too many arguments");
+     * return;
+     * }
+     * 
+     * int seed = 5;
+     * if (args.length == 1)
+     * seed = Integer.parseInt(args[0]);
+     * 
+     * greedyExample(seed);
+     * backtrackExample(seed);
+     * hopcroftKarpExample(seed);
+     */
   }
 }

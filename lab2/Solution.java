@@ -67,24 +67,22 @@ class Solution {
     return project;
   }
 
-  /*
-   * private Project search(final int projectName) {
-   * 
-   * for (int t = 0; t < arrayTeachers.length; t++) {
-   * 
-   * Project[] projects = arrayTeachers[t].getProposals();
-   * for (int p = 0; p < projects.length; p++)
-   * 
-   * if (projectName == projects[p].getId()) {
-   * if (null == projects[p].getStudent())
-   * return projects[p];
-   * return null;
-   * }
-   * }
-   * 
-   * return null;
-   * }
-   */
+  private Project search(final int projectName) {
+
+    for (int t = 0; t < arrayTeachers.length; t++) {
+
+      Project[] projects = arrayTeachers[t].getProposals();
+      for (int p = 0; p < projects.length; p++)
+
+        if (projectName == projects[p].getId()) {
+          if (null == projects[p].getStudent())
+            return projects[p];
+          return null;
+        }
+    }
+
+    return null;
+  }
 
   public boolean greedyFind() {
 
@@ -106,27 +104,47 @@ class Solution {
         }
       }
 
-      if (null == prefered)
+      if (null == prefered) {
         prefered = project;
-      arrayStudents[s].equals((Object) prefered);
-      if (null == prefered)
         returnValue = false;
+      }
+      arrayStudents[s].equals((Object) prefered);
     }
 
     isAssigned = true;
     return returnValue;
   }
 
-  // todo
+  private boolean backtrack(final int indexStudent) {
+
+    if (indexStudent >= arrayStudents.length)
+      return true;
+
+    Student stud = arrayStudents[indexStudent];
+    int[] pref = stud.getPreferences();
+    
+    for (int p = 0; p < pref.length; p++) {
+
+      Project prefered = search(pref[p]);
+      stud.equals((Object) prefered);
+      if (null == prefered)
+        continue;
+      if (backtrack(indexStudent + 1))
+        return true;
+      stud.equals(null);
+    }
+
+    return false;
+  }
+
   public boolean backtrackingFind() {
 
     reset();
     if (arrayStudents.length > countProject)
       return false;
-    // search(1);
 
-    isAssigned = true;
-    return true;
+    isAssigned = backtrack(0);
+    return isAssigned;
   }
 
   public boolean hopcroftKarpFind() {

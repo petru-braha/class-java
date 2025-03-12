@@ -6,4 +6,3 @@ statically typed -> type checking at compilation time
 dinamically typed -> type checking at run time
 
 find . -type f -name "*.class" -exec rm {} \;
-
