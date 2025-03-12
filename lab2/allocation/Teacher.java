@@ -1,10 +1,22 @@
 package lab2.allocation;
 
-/* proposals can be updated but not inserted */
+/**
+ * Represents a teacher who can propose multiple projects.
+ * <p>
+ * Proposals can be updated but not inserted.
+ * </p>
+ */
 public class Teacher extends Person {
 
-  private Project[] projectProposals;
+  private Project[] projectProposals; // Array of projects proposed by the teacher
 
+  /**
+   * Constructs a Teacher instance with the given details.
+   *
+   * @param pName  The name of the teacher (as an integer identifier).
+   * @param pBirth The birth year of the teacher.
+   * @param pref   The list of project proposals.
+   */
   public Teacher(final int pName, final int pBirth,
       final Project[] pref) {
 
@@ -18,6 +30,14 @@ public class Teacher extends Person {
         pref[i].setTeacher(this);
   }
 
+  /**
+   * Assigns a new set of project proposals to the teacher,
+   * replacing the existing ones if applicable.
+   *
+   * @param arrProposals The array of new project proposals.
+   * @return {@code true} if the assignment was successful, {@code false}
+   *         otherwise.
+   */
   @Override
   public boolean equals(Object arrProposals) {
 
@@ -45,10 +65,21 @@ public class Teacher extends Person {
     return true;
   }
 
+  /**
+   * Retrieves the list of projects proposed by the teacher.
+   *
+   * @return An array of {@link Project} objects proposed by the teacher.
+   */
   public Project[] getProposals() {
     return projectProposals;
   }
 
+  /**
+   * Returns a string representation of the teacher, including name
+   * and the list of proposed projects.
+   *
+   * @return A formatted string describing the teacher.
+   */
   @Override
   public String toString() {
     StringBuilder build = new StringBuilder("teacher name: ");

@@ -39,8 +39,7 @@ public class Bonus {
 
   public static void main(String[] args) {
 
-    Problem p0 = new Problem(5);
-    return;
+    //Problem p0 = new Problem(5);
     
     if (args.length > 1) {
       System.out.printf("error: bonus failed - %s.\n",
