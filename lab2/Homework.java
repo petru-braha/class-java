@@ -5,7 +5,7 @@ import lab2.allocation.ProjectType;
 import lab2.allocation.Student;
 import lab2.allocation.Teacher;
 
-public class homework {
+public class Homework {
 
   public static void main(String[] args) {
 
@@ -47,10 +47,10 @@ public class homework {
         s0.getProject().getId());
     System.out.printf("s1 - expected: 103, received: %d;\n",
         s1.getProject().getId());
-    System.out.printf("s2 - expected: 104%s, received: %s;\n",
+    System.out.printf("s2 - expected: 104%s, received: %s;\n\n",
         " (not a preffered value)",
-        null == s0.getProject()
+        null == s2.getProject()
             ? "null"
-            : Integer.toString(s0.getProject().getId()));
+            : Integer.toString(s2.getProject().getId()));
   }
 }

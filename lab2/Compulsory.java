@@ -2,7 +2,7 @@ package lab2;
 
 import lab2.allocation.*;
 
-public class compulsory {
+public class Compulsory {
 
   public static void main(String[] args) {
 

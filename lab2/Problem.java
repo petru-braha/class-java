@@ -40,7 +40,7 @@ public class Problem {
     for (int t = 0, prev = 0; t < ct && prev < ct; t++, prev++) {
 
       int next = Generation.g(prev, prev + factor + 1);
-      if (prev + factor >= ct)
+      if (next >= ct)
         next = ct - 1;
 
       Project[] proposals = new Project[next - prev + 1];

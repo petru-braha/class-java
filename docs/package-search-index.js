@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"algo"},{"l":"All Packages","u":"allpackages-index.html"},{"l":"lab1"},{"l":"lab2"},{"l":"lab2.allocation"}];updateSearchResults();

@@ -34,6 +34,13 @@ public class Student extends Person {
   @Override
   public boolean equals(Object pProject) {
 
+    if (null == pProject) {
+      if (null != mProject)
+        mProject.setStudent(null);
+      mProject = null;
+      return true;
+    }
+
     if (!(pProject instanceof Project)) {
       System.out.printf("error: Student equals failed - %s.\n",
           "wrong type of instance");
@@ -70,13 +77,13 @@ public class Student extends Person {
   public String toString() {
 
     StringBuilder build = new StringBuilder("student id: ");
-    build.append(Integer.toString(registrationNumber)).append("; preferences:");
+    build.append(registrationNumber).append("; preferences:");
     for (int i = 0; i < projectPreferences.length; i++)
-      build.append(" ").append(Integer.toString(projectPreferences[i]));
+      build.append(" ").append(projectPreferences[i]);
     build.append("; ");
     if (null != mProject)
       build.append("selected the project: ")
-          .append(Integer.toString(mProject.getId()))
+          .append(mProject.getId())
           .append(";");
     else
       build.append("did not select a project;");
