@@ -123,16 +123,21 @@ public class Student extends Person {
   public String toString() {
 
     StringBuilder build = new StringBuilder("student id: ");
-    build.append(registrationNumber).append("; preferences:");
+    build.append(registrationNumber).append("; preferences:\n ");
+
+    if (null == projectPreferences || 0 == projectPreferences.length)
+      return build.append(" nothing;").toString();
+
     for (int i = 0; i < projectPreferences.length; i++)
       build.append(" ").append(projectPreferences[i]);
     build.append("; ");
-    if (null != mProject)
-      build.append("selected the project: ")
-          .append(mProject.getId())
-          .append(";");
-    else
-      build.append("did not select a project;");
-    return build.toString();
+
+    if (null == mProject)
+      return build.append("did not select a project;").toString();
+
+    return build.append("selected the project: ")
+        .append(mProject.getId())
+        .append(";")
+        .toString();
   }
 }

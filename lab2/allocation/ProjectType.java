@@ -8,7 +8,7 @@ public enum ProjectType {
   /**
    * Represents a theoretical project.
    */
-  thoretical,
+  theoretical,
 
   /**
    * Represents a practical project.

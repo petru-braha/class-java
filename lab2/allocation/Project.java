@@ -99,15 +99,15 @@ public class Project {
   public String toString() {
 
     StringBuilder build = new StringBuilder("project name: ");
-    build.append(Integer.toString(id)).append("; type: ");
-    if (type == ProjectType.thoretical)
-      build.append("thoretical; ");
+    build.append(id).append("; type: ");
+    if (type == ProjectType.theoretical)
+      build.append("theoretical; ");
     else
       build.append("practical; ");
 
     if (null != mStudent)
       build.append("selected by the student: ")
-          .append(Integer.toString(mStudent.getId()))
+          .append(mStudent.getId())
           .append(";");
     else
       build.append("was not selected;");

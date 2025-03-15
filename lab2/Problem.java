@@ -13,14 +13,14 @@ public class Problem {
 
     for (int s = 0; s < cs; s++) {
 
-      int countPreference = Generation.g(0, cp);
+      int countPreference = Generation.g(0, cp + 1);
       int[] pref = new int[countPreference];
       for (int i = 0; i < pref.length; i++)
         pref[i] = i;
 
       // 1% chance to generate an invalid preference
       Generation.select(pref.length, pref);
-      if (100 == Generation.g(0, 100 + 1))
+      if (0 == Generation.g(0, 100))
         pref[Generation.g(0, pref.length)] = Integer.MAX_VALUE;
 
       arrayStudent[s] = new Student(s,
@@ -37,7 +37,8 @@ public class Problem {
       factor = 1;
     factor = factor + factor / 2;
 
-    for (int t = 0, prev = 0; t < ct && prev < ct; t++, prev++) {
+    int t = 0;
+    for (int prev = 0; t < ct && prev < ct; t++, prev++) {
 
       int next = Generation.g(prev, prev + factor + 1);
       if (next >= arrayProject.length)
@@ -51,6 +52,15 @@ public class Problem {
       arrayTeacher[t] = new Teacher(t,
           Generation.g(0, 20122030),
           proposals);
+    }
+
+    if (t == ct)
+      return;
+
+    for (int i = t; i < ct; i++) {
+      arrayTeacher[i] = new Teacher(t,
+          Generation.g(0, 20122030),
+          new Project[0]);
     }
   }
 
@@ -76,7 +86,7 @@ public class Problem {
 
       ProjectType type = ProjectType.practical;
       if (0 == Generation.g(0, 2))
-        type = ProjectType.thoretical;
+        type = ProjectType.theoretical;
 
       arrayProject[p] = new Project(type, p, null, null);
     }
@@ -89,14 +99,16 @@ public class Problem {
     int ct = Generation.g(seed - seed / 2, seed + seed / 2);
     arrayTeacher = new Teacher[ct];
     generateTeacher(cp, ct, arrayProject);
+  }
 
-    // todo when project finish up faster than teachers =>null
-    for (int i = 0; i < arrayProject.length; i++)
-      System.out.printf("%s\n", arrayProject[i].toString());
-    System.out.printf("\n");
+  public void printDetails() {
+
+    System.out.println("all the involved students:");
     for (int i = 0; i < arrayStudent.length; i++)
       System.out.printf("%s\n", arrayStudent[i].toString());
     System.out.printf("\n");
+
+    System.out.println("all the involved teachers:");
     for (int i = 0; i < arrayTeacher.length; i++)
       System.out.printf("%s\n", arrayTeacher[i].toString());
     System.out.printf("\n");

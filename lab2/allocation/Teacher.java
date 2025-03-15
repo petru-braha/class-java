@@ -82,15 +82,15 @@ public class Teacher extends Person {
    */
   @Override
   public String toString() {
+
     StringBuilder build = new StringBuilder("teacher name: ");
-    build.append(Integer.toString(name)).append("; proposals:");
+    build.append(name).append("; proposals:");
 
     if (null == projectProposals || 0 == projectProposals.length)
-      build.append(" nothing;");
+      return build.append("\n  nothing;").toString();
 
     for (int i = 0; i < projectProposals.length; i++)
-      build.append(" ").append(projectProposals[i].getId());
-    build.append(";");
+      build.append("\n  ").append(projectProposals[i].toString());
     return build.toString();
   }
 }

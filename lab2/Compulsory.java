@@ -9,9 +9,9 @@ public class Compulsory {
     // Create projects with different project types and IDs
     // Project p0 and p1 are theoretical projects, while p2 is a practical project
     Project p0 = new Project(
-        ProjectType.thoretical, 102, null, null); // Theoretical project with ID 102
+        ProjectType.theoretical, 102, null, null); // Theoretical project with ID 102
     Project p1 = new Project(
-        ProjectType.thoretical, 103, null, null); // Theoretical project with ID 103
+        ProjectType.theoretical, 103, null, null); // Theoretical project with ID 103
     Project p2 = new Project(
         ProjectType.practical, 104, null, null); // Practical project with ID 104
 

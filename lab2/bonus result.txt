@@ -1,0 +1,78 @@
+// test for seed = 7
+
+all the involved students:
+student id: 1000; preferences:
+  2 5 3 0 1 4; did not select a project;
+student id: 1001; preferences:
+  0 3 2 5 1 4; did not select a project;
+student id: 1002; preferences:
+  nothing;
+student id: 1003; preferences:
+  nothing;
+student id: 1004; preferences:
+  nothing;
+student id: 1005; preferences:
+  nothing;
+student id: 1006; preferences:
+  nothing;
+student id: 1007; preferences:
+  0 3 1 4 2; did not select a project;
+
+all the involved teachers:
+teacher name: 0; proposals:
+  project name: 0; type: thoretical; was not selected;
+teacher name: 1; proposals:
+  project name: 3; type: practical; was not selected;
+  project name: 6; type: thoretical; was not selected;
+teacher name: 2; proposals:
+  project name: 5; type: practical; was not selected;
+teacher name: 3; proposals:
+  project name: 7; type: practical; was not selected;
+teacher name: 4; proposals:
+  project name: 2; type: thoretical; was not selected;
+  project name: 4; type: thoretical; was not selected;
+teacher name: 5; proposals:
+  project name: 1; type: thoretical; was not selected;
+teacher name: 6; proposals:
+  nothing;
+teacher name: 7; proposals:
+  nothing;
+teacher name: 8; proposals:
+  nothing;
+
+nanoseconds: 24933 - greedy - true.
+stud:1002-proj:0; stud:1003-proj:3; stud:1004-proj:6; stud:1005-proj:5; stud:1006-proj:7; stud:1007-proj:1; stud:1000-proj:2; stud:1001-proj:4;
+
+// test for seed = 7
+
+all the involved students:
+student id: 1000; preferences:
+  1 0; did not select a project;
+student id: 1001; preferences:
+  2 1 0; did not select a project;
+student id: 1002; preferences:
+  2 0 3 1; did not select a project;
+student id: 1003; preferences:
+  1 2 3 0; did not select a project;
+student id: 1004; preferences:
+  nothing;
+student id: 1005; preferences:
+  0 2 3 4 1; did not select a project;
+
+all the involved teachers:
+teacher name: 0; proposals:
+  project name: 3; type: theoretical; was not selected;
+teacher name: 1; proposals:
+  project name: 0; type: theoretical; was not selected;
+teacher name: 2; proposals:
+  project name: 5; type: theoretical; was not selected;
+  project name: 2; type: theoretical; was not selected;
+teacher name: 3; proposals:
+  project name: 1; type: theoretical; was not selected;
+  project name: 4; type: practical; was not selected;
+teacher name: 4; proposals:
+  nothing;
+
+nanoseconds: 14247 - greedy - false.
+nanoseconds: 67676 - backtracking - true.
+stud:1005-proj:4; stud:1000-proj:1; stud:1001-proj:2; stud:1002-proj:0; stud:1003-proj:3; stud:1004-proj:5;
