@@ -51,13 +51,20 @@ public class Bonus {
     System.out.printf("nanoseconds: %d - backtracking - %b.\n", time, result);
     if (result)
       s.printAssignation();
-
-    s.reset();
-    time = System.nanoTime();
-    result = s.hopcroftKarpFind();
-    time = System.nanoTime() - time;
-    System.out.printf("nanoseconds: %d - hopcroftKarp - %b.\n", time, result);
-    if (result)
-      s.printAssignation();
+    
+    Runtime run = Runtime.getRuntime();
+    long bytes = run.totalMemory() - run.freeMemory();
+    System.out.printf("space used: %d bytes.\n", bytes);
+    
+    /*
+     * not working
+     * s.reset();
+     * time = System.nanoTime();
+     * result = s.hopcroftKarpFind();
+     * time = System.nanoTime() - time;
+     * System.out.printf("nanoseconds: %d - hopcroftKarp - %b.\n", time, result);
+     * if (result)
+     * s.printAssignation();
+     */
   }
 }

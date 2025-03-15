@@ -260,18 +260,18 @@ class Solution {
       LinkedList<Student>.Node node = freeNodes.getH();
       for (int i = prv; i < idx; i++, node = node.next) {
 
-
         if (false == side) /* left */ {
 
           Student stud = node.data;
-          if(null != stud.getProject())
+          if (null != stud.getProject())
             continue;
-  
+
           int[] pref = stud.getPreferences();
           for (int p = 0; p < pref.length; p++)
-            if()
-        }
-        else /* right */ {
+            if (true) {
+              getProject(idx);
+            }
+        } else /* right */ {
 
         }
 
@@ -285,7 +285,6 @@ class Solution {
     // dfs back
     // nothings was found
     return null;
-
   }
 
   /*
