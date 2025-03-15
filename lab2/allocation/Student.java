@@ -140,4 +140,18 @@ public class Student extends Person {
         .append(";")
         .toString();
   }
+
+  private Student(final int pName, final int pBirth,
+      final int[] pref, final Project proj, boolean t) {
+
+    super(pName, pBirth);
+    projectPreferences = pref;
+    mProject = proj;
+    registrationNumber = availableId;
+    // availableId++; commented, should not happen
+  }
+
+  public Student clone() {
+    return new Student(name, birthDate, projectPreferences, mProject, true);
+  }
 }

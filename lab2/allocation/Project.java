@@ -5,7 +5,12 @@ package lab2.allocation;
  */
 public class Project {
 
-  private final int id; // Unique identifier for the project
+  private static int availableId;
+  static {
+    availableId = 0;
+  }
+
+  private final int name, id; // Unique identifier for the project
   private final ProjectType type; // Type of project (theoretical or practical)
 
   private Student mStudent; // The student who selected this project
@@ -19,10 +24,12 @@ public class Project {
    * @param pSt   The student associated with the project.
    * @param pTh   The teacher supervising the project.
    */
-  public Project(final ProjectType pType, final int pId,
+  public Project(final ProjectType pType, final int pName,
       final Student pSt, final Teacher pTh) {
     type = pType;
-    id = pId;
+    name = pName;
+    id = availableId++;
+
     mStudent = pSt;
     mTeacher = pTh;
   }
@@ -49,6 +56,13 @@ public class Project {
    */
   void setTeacher(final Teacher pTeacher) {
     mTeacher = pTeacher;
+  }
+
+  /**
+   * @return The project name.
+   */
+  public int getName() {
+    return name;
   }
 
   /**
@@ -98,7 +112,7 @@ public class Project {
   @Override
   public String toString() {
 
-    StringBuilder build = new StringBuilder("project name: ");
+    StringBuilder build = new StringBuilder("project id: ");
     build.append(id).append("; type: ");
     if (type == ProjectType.theoretical)
       build.append("theoretical; ");

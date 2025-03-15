@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 import lab2.allocation.*;
+import lab2.structure.*;
 
 class Solution {
 
@@ -16,9 +17,28 @@ class Solution {
   }
 
   private Student[] arrayStudent;
-  private Teacher[] arrayTeachers;
+  private Teacher[] arrayTeacher;
   private final int countProject;
   private boolean isAssigned;
+
+  private Project getProject(final int id) {
+
+    if (id >= countProject) {
+      System.out.printf("warning: %s failed - %s.\n",
+          "Solution.getProject()",
+          "bad index");
+      return null;
+    }
+
+    for (int t = 0; t < arrayTeacher.length; t++) {
+      Project[] proposals = arrayTeacher[t].getProposals();
+      for (int p = 0; p < proposals.length; p++)
+        if (id == proposals[p].getId())
+          return proposals[p];
+    }
+
+    return null;
+  }
 
   public Solution(Problem problem) {
 
@@ -34,11 +54,11 @@ class Solution {
       arrayStudent[nS - 1 - i] = student;
     }
 
-    arrayTeachers = problem.getTeachers();
+    arrayTeacher = problem.getTeachers();
 
     int sum = 0;
-    for (int i = 0; i < arrayTeachers.length; i++)
-      sum += arrayTeachers[i].getProposals().length;
+    for (int i = 0; i < arrayTeacher.length; i++)
+      sum += arrayTeacher[i].getProposals().length;
     countProject = sum;
 
     isAssigned = false;
@@ -46,9 +66,9 @@ class Solution {
 
   private Project greedyUnselected() {
 
-    for (int t = 0; t < arrayTeachers.length; t++) {
+    for (int t = 0; t < arrayTeacher.length; t++) {
 
-      Project[] projects = arrayTeachers[t].getProposals();
+      Project[] projects = arrayTeacher[t].getProposals();
       for (int p = 0; p < projects.length; p++)
         if (null == projects[p].getStudent())
           return projects[p];
@@ -66,9 +86,9 @@ class Solution {
 
     // optimizes the search after passing by projectName
     boolean optimize = false;
-    for (int t = 0; t < arrayTeachers.length; t++) {
+    for (int t = 0; t < arrayTeacher.length; t++) {
 
-      Project[] projects = arrayTeachers[t].getProposals();
+      Project[] projects = arrayTeacher[t].getProposals();
       for (int p = 0; p < projects.length; p++) {
 
         if (projectName == projects[p].getId()) {
@@ -96,9 +116,9 @@ class Solution {
     if (Integer.MAX_VALUE == projectName)
       return null;
 
-    for (int t = 0; t < arrayTeachers.length; t++) {
+    for (int t = 0; t < arrayTeacher.length; t++) {
 
-      Project[] projects = arrayTeachers[t].getProposals();
+      Project[] projects = arrayTeacher[t].getProposals();
       for (int p = 0; p < projects.length; p++)
 
         if (projectName == projects[p].getId()) {
@@ -193,14 +213,136 @@ class Solution {
     return backtrack(0);
   }
 
+  private int belongsTo(Student edge, Student[] matchedEdges) {
+
+    int indexNull = -1;
+    for (int s = 0; s < matchedEdges.length; s++) {
+
+      if (null == matchedEdges[s]) {
+        if (-1 == indexNull)
+          indexNull = s;
+        continue;
+      }
+
+      if (edge.getId() != matchedEdges[s].getId())
+        continue;
+      Project p0 = edge.getProject(), p1 = matchedEdges[s].getProject();
+      if ((null == p0 && null != p1) || (null != p0 && null == p1))
+        continue;
+
+      if (null == p0 || p0.getId() == p1.getId())
+        return s;
+    }
+
+    return indexNull;
+  }
+
+  /*
+   * the alternating path is obtained through another array of the same students
+   * an edge is matched if null != student.getProject()
+   * an edge is unmatched if null == student.getProject()
+   * 
+   * bfs starts from a free node
+   */
+  private Student[] augmentingPath(Student[] matchedEdges) {
+
+    LinkedList<Student> freeNodes = new LinkedList<>();
+    for (int s = 0; s < matchedEdges.length; s++)
+      if (null == matchedEdges[s].getProject())
+        freeNodes.insertTail(matchedEdges[s]);
+
+    // bfs
+    boolean side = false; // false == left
+    int prv = 0, idx = freeNodes.getN();
+
+    while (null != freeNodes.getH()) {
+
+      LinkedList<Student>.Node node = freeNodes.getH();
+      for (int i = prv; i < idx; i++, node = node.next) {
+
+
+        if (false == side) /* left */ {
+
+          Student stud = node.data;
+          if(null != stud.getProject())
+            continue;
+  
+          int[] pref = stud.getPreferences();
+          for (int p = 0; p < pref.length; p++)
+            if()
+        }
+        else /* right */ {
+
+        }
+
+      }
+
+      prv = idx;
+      idx = freeNodes.getN();
+      side = !side;
+    }
+
+    // dfs back
+    // nothings was found
+    return null;
+
+  }
+
+  /*
+   * X = students, Y = projects
+   * HALL: there is a perfect matching <=> |W| <= |N_G(W)|, any W = subset of X
+   * is there a perfect matching?
+   * is there a matching that covers every student?
+   * 
+   * computing each subset is as bad as backtracking in time complexity
+   * hopcroftKarpFind() returns a maximum-cardinality matching in O(sqrt(V)*E)
+   * if the cardinality is equal to the student count the condition is satisfied
+   */
   public boolean hopcroftKarpFind() {
 
     reset();
     if (arrayStudent.length > countProject)
       return false;
 
+    // only this array will support equals() operations
+    Student[] matchedEdges = new Student[arrayStudent.length];
+    Arrays.fill(matchedEdges, null);
+
+    // initialization
+    for (int s = 0; s < arrayStudent.length; s++) {
+
+      int[] preferences = arrayStudent[s].getPreferences();
+      for (int p = 0; s < preferences.length; p++) {
+
+        Project proj = greedySearch(p, null);
+        matchedEdges[s] = arrayStudent[s].clone();
+        matchedEdges[s].equals((Object) proj);
+        if (null != proj)
+          break;
+      }
+    }
+
+    // loop
+    Student[] path = augmentingPath(matchedEdges);
+    for (; null != path; path = augmentingPath(matchedEdges))
+
+      for (int e = 0; e < path.length; e++) {
+
+        int indexEdge = belongsTo(path[e], matchedEdges);
+        if (-1 == indexEdge) {
+          System.out.printf("error: hopcroftKarpFind() failed - %s.\n",
+              "matched edge array was full");
+          return false;
+        }
+
+        if (null != matchedEdges[indexEdge])
+          matchedEdges[indexEdge] = null;
+        else
+          matchedEdges[indexEdge] = path[e].clone();
+      }
+
     isAssigned = true;
-    return true;
+    return arrayStudent.length == matchedEdges.length;
   }
 
   public void reset() {

@@ -1,5 +1,9 @@
 package lab2;
 
+/* this homework is ridiculous because i am not allowed to use collections,
+ * i.e. hash-maps - constant average time complexity for searching elements
+ * the array implementation ruins the beauty of the algoritms presented
+ */
 public class Bonus {
 
   private static final int DEFAULT_SEED = 7;
@@ -40,6 +44,7 @@ public class Bonus {
       s.printAssignation();
 
     // greedy true => backtrack true
+    s.reset();
     time = System.nanoTime();
     result = s.backtrackingFind();
     time = System.nanoTime() - time;
@@ -47,6 +52,7 @@ public class Bonus {
     if (result)
       s.printAssignation();
 
+    s.reset();
     time = System.nanoTime();
     result = s.hopcroftKarpFind();
     time = System.nanoTime() - time;
