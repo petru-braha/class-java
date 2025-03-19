@@ -19,7 +19,8 @@ public class Homework {
     schedule.add(new Flight(v2, 20, 23));
 
     Problem p0 = new Problem(airport, schedule);
+    System.out.printf("%s\n", p0.toString());
     Solution s0 = new Solution(p0);
-    //System.out.printf("result: %d.\n", s0.greedyFind());
+    System.out.printf("%d\n", s0.greedyFind());
   }
 }

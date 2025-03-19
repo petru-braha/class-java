@@ -54,7 +54,7 @@ public class Flight implements Comparable<Flight> {
 
   @Override
   public String toString() {
-    StringBuilder build = new StringBuilder("\nthe flight ");
+    StringBuilder build = new StringBuilder("the flight ");
     build.append(id)
         .append(" - ")
         .append(vehicle.toString())
@@ -64,6 +64,6 @@ public class Flight implements Comparable<Flight> {
         .append(", ")
         .append("arrives at ")
         .append(endTime);
-    return build.toString();
+    return build.append(";").toString();
   }
 }

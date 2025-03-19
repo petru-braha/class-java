@@ -17,6 +17,7 @@ public class Problem {
   }
 
   public Problem(Airport a, TreeSet<Flight> f) {
+
     airport = a;
     flights = f;
 
@@ -26,6 +27,13 @@ public class Problem {
           it0.addConflict(it1);
           it1.addConflict(it0);
         }
+
+    for (Flight it : f) {
+      System.out.printf("%d - ", it.getId());
+      for (Flight neighbor : it.getConflicts())
+        System.out.printf("%d ", neighbor.getId());
+      System.out.printf("\n");
+    }
   }
 
   public final int getRunways() {
@@ -38,8 +46,10 @@ public class Problem {
 
   @Override
   public String toString() {
-    StringBuilder build  = new StringBuilder(airport.toString());
-    build.append("\n").append(flights.toString());
+    StringBuilder build = new StringBuilder(airport.toString())
+        .append("\n");
+    for (Flight f : flights)
+      build.append(f.toString()).append("\n");
     return build.toString();
   }
 }
