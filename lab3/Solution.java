@@ -21,17 +21,11 @@ public class Solution {
 
   public int greedyFind() {
 
-    for (Flight it : schedule) {
-      System.out.printf("%d - ", it.getId());
-      for (Flight neighbor : it.getConflicts())
-        System.out.printf("%d ", neighbor.getId());
-      System.out.printf("\n");
-    }
-
     if (isAssigned)
       return -1;
 
     HashMap<Flight, Integer> assignation = new HashMap<>();
+    Integer maximumRunway = -1;
 
     for (Flight it : schedule) {
 
@@ -44,15 +38,20 @@ public class Solution {
 
       for (Integer i = 0; i < schedule.size(); i++)
         if (false == usedColors.contains(i)) {
+          if(i > maximumRunway)
+            maximumRunway = i;
           assignation.put(it, i);
           break;
         }
+      
     }
 
+    System.out.printf("%s\n", assignation.toString());
+
     isAssigned = true;
-    if (assignation.size() > countRunways)
+    if (maximumRunway >= countRunways)
       return -1;
-    return assignation.size();
+    return maximumRunway;
   }
 
   public void reset() {
