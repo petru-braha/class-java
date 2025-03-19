@@ -9,9 +9,11 @@ public class Problem {
   private final TreeSet<Flight> flights;
 
   private boolean isConflict(final Flight f0, final Flight f1) {
-    if (f0.getBeginInterval() < f1.getEndInterval())
+    if (f1.getBeginInterval() < f0.getBeginInterval() &&
+        f0.getBeginInterval() < f1.getEndInterval())
       return true;
-    if (f1.getBeginInterval() < f0.getEndInterval())
+    if (f0.getBeginInterval() < f1.getBeginInterval() &&
+        f1.getBeginInterval() < f0.getEndInterval())
       return true;
     return false;
   }
@@ -27,13 +29,6 @@ public class Problem {
           it0.addConflict(it1);
           it1.addConflict(it0);
         }
-
-    for (Flight it : f) {
-      System.out.printf("%d - ", it.getId());
-      for (Flight neighbor : it.getConflicts())
-        System.out.printf("%d ", neighbor.getId());
-      System.out.printf("\n");
-    }
   }
 
   public final int getRunways() {
