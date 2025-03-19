@@ -51,4 +51,19 @@ public class Flight implements Comparable<Flight> {
   public HashSet<Flight> getConflicts() {
     return neighbors;
   }
+
+  @Override
+  public String toString() {
+    StringBuilder build = new StringBuilder("\nthe flight ");
+    build.append(id)
+        .append(" - ")
+        .append(vehicle.toString())
+        .append(", ")
+        .append("departs at ")
+        .append(beginTime)
+        .append(", ")
+        .append("arrives at ")
+        .append(endTime);
+    return build.toString();
+  }
 }

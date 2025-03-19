@@ -22,4 +22,17 @@ public class Drone extends Aircraft implements CargoCapable {
   public int getMaxPayload() {
     return maxPayload;
   }
+
+  @Override
+  public String toString() {
+    StringBuilder build = new StringBuilder("drone-");
+    build.append(model)
+        .append("-")
+        .append(name)
+        .append("-")
+        .append(wingSpan)
+        .append("-")
+        .append(maxPayload);
+    return build.toString();
+  }
 }

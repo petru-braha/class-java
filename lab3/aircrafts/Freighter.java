@@ -12,8 +12,18 @@ public class Freighter extends Aircraft implements CargoCapable {
     this.maxPayload = maxP;
   }
 
-  @Override
   public int getMaxPayload() {
     return maxPayload;
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder build = new StringBuilder("freighter-");
+    build.append(model)
+        .append("-")
+        .append(name)
+        .append("-")
+        .append(maxPayload);
+    return build.toString();
   }
 }

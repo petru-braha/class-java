@@ -17,4 +17,9 @@ public abstract class Aircraft {
   public int getName() {
     return name;
   }
+
+  @Override
+  public String toString(){
+    return Integer.toString(name);
+  }
 }

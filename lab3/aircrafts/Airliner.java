@@ -22,4 +22,17 @@ public class Airliner extends Aircraft implements PasangerCapable {
   public int getPassengerCapacity() {
     return maxNumberPasager;
   }
+
+  @Override
+  public String toString() {
+    StringBuilder build = new StringBuilder("airliner-");
+    build.append(model)
+        .append("-")
+        .append(name)
+        .append("-")
+        .append(wingSpan)
+        .append("-")
+        .append(maxNumberPasager);
+    return build.toString();
+  }
 }

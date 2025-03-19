@@ -35,4 +35,11 @@ public class Problem {
   public final TreeSet<Flight> getFlights() {
     return flights;
   }
+
+  @Override
+  public String toString() {
+    StringBuilder build  = new StringBuilder(airport.toString());
+    build.append("\n").append(flights.toString());
+    return build.toString();
+  }
 }

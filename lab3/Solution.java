@@ -26,8 +26,8 @@ public class Solution {
 
     for (Flight it0 : schedule) {
       HashSet colors = new HashSet<>();
-      for(Flight neighbor : it0.getConflicts())
-        if
+      //for(Flight neighbor : it0.getConflicts())
+        //if
     }
 
     return -1;

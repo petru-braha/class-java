@@ -9,7 +9,7 @@ public class Homework {
   public static void main(String[] args) {
 
     Aircraft v0 = new Airliner(0, 10, 2, 300),
-        v1 = new Airliner(0, 11, 4, 500),
+        v1 = new Freighter(0, 11, 500),
         v2 = new Drone(5, 1002, 16, 2);
 
     Airport airport = new Airport(2);
@@ -20,6 +20,6 @@ public class Homework {
 
     Problem p0 = new Problem(airport, schedule);
     Solution s0 = new Solution(p0);
-    System.out.printf("result: %d.\n", s0.greedyFind()); 
+    //System.out.printf("result: %d.\n", s0.greedyFind());
   }
 }

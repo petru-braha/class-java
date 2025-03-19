@@ -20,4 +20,12 @@ public class Airport {
   public final int getRunways(){
     return countRunways;
   }
+
+  @Override
+  public String toString() {
+    StringBuilder build = new StringBuilder("the airport has ");
+    build.append(countRunways);
+    build.append(" runways;");
+    return build.toString();
+  }
 }
