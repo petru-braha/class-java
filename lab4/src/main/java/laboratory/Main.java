@@ -1,4 +1,4 @@
-package lab4;
+package laboratory;
 
 import java.util.Comparator;
 import java.util.Iterator;

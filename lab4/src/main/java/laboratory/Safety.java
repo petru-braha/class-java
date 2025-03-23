@@ -1,4 +1,4 @@
-package lab4;
+package laboratory;
 
 public enum Safety {
   Friendly,
