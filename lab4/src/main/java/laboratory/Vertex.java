@@ -1,6 +1,6 @@
 package laboratory;
 
-public class Vertex {
+public class Vertex implements Comparable<Vertex> {
 
   private static int availableId = 0;
   private final int id;
@@ -31,5 +31,10 @@ public class Vertex {
         .append(type)
         .append(";");
     return build.toString();
+  }
+
+  @Override
+  public int compareTo(Vertex arg) {
+    return Integer.compare(this.id, arg.id);
   }
 }

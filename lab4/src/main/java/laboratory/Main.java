@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.LinkedList;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -21,11 +22,10 @@ public class Main {
     Vertex[] arrayLocation = { v0, v1, v2, v3, v4, v5 };
     System.out.println(v1.toString());
 
-    // todo defineste treeset
     Set<Vertex> friendlyLocation = List.of(arrayLocation)
         .stream()
         .filter(v -> Safety.Friendly == v.getType())
-        .collect(Collectors.toSet());
+        .collect(Collectors.toCollection(TreeSet::new));
 
     List<Vertex> enemyLocation = List.of(arrayLocation)
         .stream()
@@ -42,5 +42,7 @@ public class Main {
     Iterator<Vertex> it1 = enemyLocation.iterator();
     while (it1.hasNext())
       System.out.printf("%s ", it1.next().toString());
+    System.out.printf("\n");
+
   }
 }
