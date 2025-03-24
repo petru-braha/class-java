@@ -1,14 +1,22 @@
 package laboratory;
 
-public class Vertex implements Comparable<Vertex> {
+public class PVertex implements Comparable<PVertex> {
 
   private static int availableId = 0;
   private final int id;
   private Safety type;
+  private String name;
 
-  public Vertex(final Safety t) {
+  public PVertex(final Safety t) {
     id = availableId++;
     type = t;
+    name = null;
+  }
+
+  public PVertex(final Safety t, final String n) {
+    id = availableId++;
+    type = t;
+    name = n;
   }
 
   public void setType(final Safety t) {
@@ -23,6 +31,10 @@ public class Vertex implements Comparable<Vertex> {
     return type;
   }
 
+  public String getName() {
+    return name;
+  }
+
   @Override
   public String toString() {
     StringBuilder build = new StringBuilder("vertex: ");
@@ -34,7 +46,7 @@ public class Vertex implements Comparable<Vertex> {
   }
 
   @Override
-  public int compareTo(Vertex arg) {
+  public int compareTo(PVertex arg) {
     return Integer.compare(this.id, arg.id);
   }
 }

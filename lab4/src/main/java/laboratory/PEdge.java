@@ -1,11 +1,11 @@
 package laboratory;
 
-public class Edge {
+public class PEdge {
 
-  private final Vertex v0, v1;
+  private final PVertex v0, v1;
   private final int cost, probability;
 
-  public Edge(final Vertex v0, final Vertex v1, final int cost) {
+  public PEdge(final PVertex v0, final PVertex v1, final int cost) {
     this.v0 = v0;
     this.v1 = v1;
     this.cost = cost;
@@ -41,11 +41,11 @@ public class Edge {
     probability = p;
   }
 
-  public Vertex getLeft() {
+  public PVertex getLeft() {
     return v0;
   }
 
-  public Vertex getRight() {
+  public PVertex getRight() {
     return v1;
   }
 
