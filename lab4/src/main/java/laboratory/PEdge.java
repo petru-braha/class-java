@@ -3,14 +3,14 @@ package laboratory;
 public class PEdge {
 
   private final PVertex v0, v1;
-  private final int cost, probability;
+  private final double cost, probability;
 
-  public PEdge(final PVertex v0, final PVertex v1, final int cost) {
+  public PEdge(final PVertex v0, final PVertex v1, final double cost) {
     this.v0 = v0;
     this.v1 = v1;
     this.cost = cost;
 
-    int p = 0;
+    double p = 0;
     if (Safety.Friendly == v0.getType()) {
       if (Safety.Friendly == v1.getType())
         p = 100;
@@ -49,11 +49,11 @@ public class PEdge {
     return v1;
   }
 
-  public int getCost() {
+  public double getCost() {
     return cost;
   }
 
-  public int getProbability() {
+  public double getProbability() {
     return probability;
   }
 }

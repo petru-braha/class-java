@@ -27,6 +27,17 @@ public class Generation {
     return utility.nextInt(startInclusive, endExclusive);
   }
 
+  /* sI == startInclusive, eE == endExlusive */
+  public static double g(final double sI, final double eE) {
+
+    if (sI >= eE) {
+      System.out.printf("error: g() failed.\n");
+      return -1.0;
+    }
+
+    return utility.nextDouble(sI, eE);
+  }
+
   /*
    * selects k random values from n in O(k)
    * behaves similarly to a random permutation
