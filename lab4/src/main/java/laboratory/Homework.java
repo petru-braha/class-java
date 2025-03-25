@@ -1,5 +1,9 @@
 package laboratory;
 
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Iterator;
+
 import com.github.javafaker.Faker;
 
 import org.graph4j.Edge;
@@ -15,7 +19,7 @@ class PrinterGraph {
   public static final char COLOR_WHITE = 0x25A0;
   public static final char COLOR_BLACK = 0x25A1;
 
-  public static void adjancyMatrix(final int[][] matrix) {
+  public static void adjacencyMatrix(final int[][] matrix) {
 
     for (int i = 0; i < matrix.length; i++) {
       for (int j = 0; j < matrix.length; j++) {
@@ -26,6 +30,17 @@ class PrinterGraph {
       }
 
       System.out.printf("\n");
+    }
+  }
+
+  @SuppressWarnings("unchecked")
+  public static void costArray(final Graph<PVertex, PEdge> graph) {
+
+    EdgeIterator<PEdge> itEdge = graph.edgeIterator();
+    while (itEdge.hasNext()) {
+      Edge<PEdge> edge = itEdge.next();
+      System.out.printf("%d-%d, cost: %f; ", edge.source(), edge.target(),
+          edge.weight());
     }
   }
 }
@@ -43,8 +58,8 @@ public class Homework {
   private static final int VRX_COUNT = 10;
   private static final double EDGE_PROB = 1.0 / 2.0;
 
-  private static final double MINIMUM_COST = 0.0;
-  private static final double MAXIMUM_COST = 10.0;
+  private static final double MINIMUM_COST = -10.0;
+  private static final double MAXIMUM_COST = 20.0;
 
   private static Faker fake = new Faker();
   private static Graph<PVertex, PEdge> graph;
@@ -66,10 +81,71 @@ public class Homework {
     return new PEdge(u, v, Generation.g(MINIMUM_COST, MAXIMUM_COST));
   }
 
+  public static double[] dijkstraAlgorithm(
+      final Graph<PVertex, PEdge> graph, final int n, final int s) {
+
+    if (null == graph) {
+      System.out.printf("error: %s failed - %s.\n",
+          "dijkstraAlgorithm()", "invalid starting vertex");
+      return null;
+    }
+
+    if (s >= n) {
+      System.out.printf("error: %s failed - %s.\n",
+          "dijkstraAlgorithm()", "invalid starting vertex");
+      return null;
+    }
+
+    Set<Integer> VrtxHash = new HashSet<>();
+    Set<Integer> VrtxShut = new HashSet<>();
+    int[] prevVrtx = new int[n];
+    double[] costPath = new double[n];
+
+    VrtxHash.add(s);
+    for (int v = 0; v < n; v++) {
+      if (v != s)
+        VrtxShut.add(v);
+      prevVrtx[v] = s;
+      costPath[v] = graph.getEdgeWeight(s, v);
+    }
+
+    for (int v = 1; v < n; v++) {
+
+      int vertex = -1;
+      for (Iterator<Integer> it = VrtxShut.iterator(); it
+          .hasNext(); vertex = it.next()) {
+        // todo treeset
+      }
+
+      // todo warning
+      if (-1 == vertex)
+        break;
+      if (false == VrtxShut.remove(vertex))
+        break;
+      if (false == VrtxHash.add(vertex))
+        break;
+
+      int point = 0;
+      for (Iterator<Integer> it = VrtxShut.iterator(); it
+          .hasNext(); vertex = it.next()) {
+
+        if (costPath[point] > costPath[vertex] +
+            graph.getEdgeWeight(vertex, point)) {
+
+          costPath[point] = costPath[vertex] + graph.getEdgeWeight(vertex, point);
+          prevVrtx[point] = vertex;
+        }
+      }
+    }
+
+    return costPath;
+  }
+
   /*
    * receives the following optional parameters:
    * n = count of vertices
    * m = count of edges
+   * starting vertex - randomly selected
    */
   @SuppressWarnings("unchecked")
   public static void main(String[] args) {
@@ -91,7 +167,7 @@ public class Homework {
           Generation.g(n - n / 2, n + n / 2),
           EDGE_PROB);
     else
-      graph = GraphGenerator.randomGnp(n, Float.parseFloat(args[1]));
+      graph = GraphGenerator.randomGnp(n, Double.parseDouble(args[1]));
 
     // add vertex labels
     var bfs = new BFSIterator(graph);
@@ -112,12 +188,18 @@ public class Homework {
     }
 
     int[][] matrix = graph.adjacencyMatrix();
-    PrinterGraph.adjancyMatrix(matrix);
+    PrinterGraph.adjacencyMatrix(matrix);
 
-    // give start location
+    int start = Generation.g(0, n);
+    System.out.printf("the starting vertex is %d.\n", start);
+    double[] shortestPaths = new double[n];// dijkstraAlgorithm(graph, n, start);
+
+    // todo
+    for (int i = 0; i < n; i++)
+      System.out.printf("path: %d-%d, cost: %f;\n",
+          start, i, shortestPaths[i]);
+
     // data structure with time
-    // graph.addVertex(new PVertex(Safety.Enemy, fake.name().lastName()));
-    // System.out.println(fake.name().lastName());
 
     // data structure for location of each type
     // measure time
