@@ -13,6 +13,8 @@
     - Hopcroft-Karp solution
       - used because of its efficiency - time complexity: O(sqrt(V)*E)
       - fully documented but not entirely implemented
+  - 4th lab [homework](./lab4/src/main/java/laboratory/Homework.java)
+    - personal implementation of the Dijkstra's algorithm
 
 - to run the experiment: make sure to run this first `cd experiment/`
   - important: the development of critical thinking
