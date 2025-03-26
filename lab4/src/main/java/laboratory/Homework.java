@@ -1,8 +1,13 @@
 package laboratory;
 
+import java.util.ArrayList;
+
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.List;
 
 import com.github.javafaker.Faker;
 
@@ -45,14 +50,6 @@ class PrinterGraph {
   }
 }
 
-/*
- * Faker to generate random fake names for locations.
- * fastest routes from the start location to all other locations:
- * Using Stream API, create a data structure that stores, for each type, the
- * locations of that type.
- * Display the fastest times computed above: first for the friendly locations,
- * then for the neutral and then for the enemy locations.
- */
 public class Homework {
 
   private static final int VRX_COUNT = 10;
@@ -81,80 +78,10 @@ public class Homework {
     return new PEdge(u, v, Generation.g(MINIMUM_COST, MAXIMUM_COST));
   }
 
-  public static double[] dijkstraAlgorithm(
-      final Graph<PVertex, PEdge> graph, final int n, final int s) {
-
-    if (null == graph) {
-      System.out.printf("error: %s failed - %s.\n",
-          "dijkstraAlgorithm()", "invalid starting vertex");
-      return null;
-    }
-
-    if (s >= n) {
-      System.out.printf("error: %s failed - %s.\n",
-          "dijkstraAlgorithm()", "invalid starting vertex");
-      return null;
-    }
-
-    Set<Integer> VrtxHash = new HashSet<>();
-    Set<Integer> VrtxShut = new HashSet<>();
-    int[] prevVrtx = new int[n];
-    double[] costPath = new double[n];
-
-    VrtxHash.add(s);
-    for (int v = 0; v < n; v++) {
-      if (v != s)
-        VrtxShut.add(v);
-      prevVrtx[v] = s;
-      costPath[v] = graph.getEdgeWeight(s, v);
-    }
-
-    for (int v = 1; v < n; v++) {
-
-      int vertex = -1;
-      for (Iterator<Integer> it = VrtxShut.iterator(); it
-          .hasNext(); vertex = it.next()) {
-        // todo treeset
-      }
-
-      // todo warning
-      if (-1 == vertex)
-        break;
-      if (false == VrtxShut.remove(vertex))
-        break;
-      if (false == VrtxHash.add(vertex))
-        break;
-
-      int point = 0;
-      for (Iterator<Integer> it = VrtxShut.iterator(); it
-          .hasNext(); vertex = it.next()) {
-
-        if (costPath[point] > costPath[vertex] +
-            graph.getEdgeWeight(vertex, point)) {
-
-          costPath[point] = costPath[vertex] + graph.getEdgeWeight(vertex, point);
-          prevVrtx[point] = vertex;
-        }
-      }
-    }
-
-    return costPath;
-  }
-
-  /*
-   * receives the following optional parameters:
-   * n = count of vertices
-   * m = count of edges
-   * starting vertex - randomly selected
-   */
   @SuppressWarnings("unchecked")
-  public static void main(String[] args) {
+  private static List<PVertex> staticGeneration(String[] args) {
 
-    if (args.length > 2) {
-      System.out.printf("error: %s failed - %s.\n",
-          "main()", "wrong number of arguments");
-      return;
-    }
+    List<PVertex> allVertices = new ArrayList<>();
 
     int n = VRX_COUNT;
     if (args.length > 0)
@@ -174,7 +101,9 @@ public class Homework {
     while (bfs.hasNext()) {
       SearchNode node = bfs.next();
       int index = node.vertex();
-      graph.setVertexLabel(index, newRandomVertex());
+      PVertex label = newRandomVertex();
+      graph.setVertexLabel(index, label);
+      allVertices.add(label);
     }
 
     // add edge labels
@@ -187,21 +116,118 @@ public class Homework {
       itEdge.setWeight(itEdge.getLabel().getCost());
     }
 
+    return allVertices;
+  }
+
+  public static double[] dijkstraAlgorithm(final int s) {
+
+    if (null == graph) {
+      System.out.printf("error: %s failed - %s.\n",
+          "dijkstraAlgorithm()", "invalid starting vertex");
+      return null;
+    }
+
+    final int n = graph.numVertices();
+    if (s >= n) {
+      System.out.printf("error: %s failed - %s.\n",
+          "dijkstraAlgorithm()", "invalid starting vertex");
+      return null;
+    }
+
+    Set<Integer> VrtxHash = new HashSet<>(); // S
+    Set<Integer> VrtxShut = new HashSet<>(); // V / S
+    int[] prevVrtx = new int[n];
+    double[] costPath = new double[n];
+
+    VrtxHash.add(s);
+    for (int v = 0; v < n; v++) {
+      if (v != s)
+        VrtxShut.add(v);
+      prevVrtx[v] = s;
+      costPath[v] = graph.getEdgeWeight(s, v);
+    }
+
+    for (int v = 1; v < n; v++) {
+
+      int vertex = -1;
+      double minimum = Double.POSITIVE_INFINITY;
+
+      Iterator<Integer> it = VrtxShut.iterator();
+      while (it.hasNext()) {
+        int point = it.next();
+
+        if (-1 != point && costPath[point] < minimum) {
+          vertex = point;
+          minimum = costPath[v];
+        }
+      }
+
+      // something went wrong
+      if (-1 == vertex) {
+        System.out.printf("warning: %s failed - %s %d.\n",
+            "dijkstraAlgorithm", "no vertex found", v);
+        return costPath;
+      }
+      if (false == VrtxShut.remove(((Integer) vertex))) {
+        System.out.printf("warning: %s failed - %s.\n",
+            "dijkstraAlgorithm", "no remove");
+        return costPath;
+      }
+      if (false == VrtxHash.add((Integer) vertex)) {
+        System.out.printf("warning: %s failed - %s.\n",
+            "dijkstraAlgorithm", "no insert");
+        return costPath;
+      }
+
+      it = VrtxShut.iterator();
+      while (it.hasNext()) {
+        int point = it.next();
+
+        double value = costPath[vertex] +
+            graph.getEdgeWeight(vertex, point);
+
+        if (costPath[point] > value) {
+          costPath[point] = value;
+          prevVrtx[point] = vertex;
+        }
+      }
+    }
+
+    return costPath;
+  }
+
+  /*
+   * receives the following optional parameters:
+   * n = count of vertices
+   * m = count of edges
+   * starting vertex - randomly selected
+   */
+  public static void main(String[] args) {
+
+    if (args.length > 2) {
+      System.out.printf("error: %s failed - %s.\n",
+          "main()", "wrong number of arguments");
+      return;
+    }
+
+    List<PVertex> allVertices = staticGeneration(args);
     int[][] matrix = graph.adjacencyMatrix();
     PrinterGraph.adjacencyMatrix(matrix);
 
-    int start = Generation.g(0, n);
-    System.out.printf("the starting vertex is %d.\n", start);
-    double[] shortestPaths = new double[n];// dijkstraAlgorithm(graph, n, start);
+    final int start = Generation.g(0, graph.numVertices());
+    System.out.printf("the starting vertex is %d.\n\n", start);
+    double[] shortestPaths = dijkstraAlgorithm(start);
 
-    // todo
-    for (int i = 0; i < n; i++)
-      System.out.printf("path: %d-%d, cost: %f;\n",
-          start, i, shortestPaths[i]);
+    for (int i = 0; i < graph.numVertices(); i++)
+      if (start != i)
+        System.out.printf("path: %d-%d, cost: %f;\n",
+            start, i, shortestPaths[i]);
 
-    // data structure with time
+    // data structure, stream api, measure time
+    Map<Safety, List<PVertex>> map = allVertices
+        .stream()
+        .collect(Collectors.groupingBy(PVertex::getType));
 
-    // data structure for location of each type
-    // measure time
+    System.out.println(map);
   }
 }
