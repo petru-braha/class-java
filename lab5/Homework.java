@@ -3,12 +3,13 @@ package lab5;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.swing.*
 
 public class Homework {
   
   public static void main(String[] args) {
-    Repository repository = new Repository();
-        Item image1 = new Item("Galati", LocalDate.of(2025, 3, 25), Arrays.asList("testoase", "gradina botanica", "chiatra"), "C:/Users/lefco/Desktop/poze aparat/P1030957.JPG", path);
+    ImageRepository repository = new ImageRepository();
+        ImageItem image1 = new ImageItem("Galati", LocalDate.of(2025, 3, 25), Arrays.asList("testoase", "gradina botanica", "chiatra"), "C:/Users/lefco/Desktop/poze aparat/P1030957.JPG", path);
         repository.addImage(image1);
 
         cmd_add addCommand = new cmd_add(repository);
@@ -49,7 +50,7 @@ public class Homework {
                 }
                     System.out.println("Images in the repository:");
                     for (int i = 0; i < repository.getImages().size(); i++) {
-                        Item image = repository.getImages().get(i);
+                        ImageItem image = repository.getImages().get(i);
                         System.out.printf("%d. %s, %s, %s, %s\n", i, image.name(), image.date(), String.join(";", image.tags()), image.location());
         }
     }

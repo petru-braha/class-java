@@ -27,3 +27,6 @@
   - the homework
   - the bonus activity
   - the task
+
+- missing homework5 
+- todo compulsory6 homework6 compulsory 7
