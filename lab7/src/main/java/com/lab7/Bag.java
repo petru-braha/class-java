@@ -24,9 +24,16 @@ public class Bag {
 
   public synchronized List<Tile> extractTiles(final int count) {
 
+    if (tiles.isEmpty())
+      return new ArrayList<>();
+
+    int limit = count;
+    if (count >= tiles.size())
+      limit = tiles.size();
+
     List<Tile> result = new ArrayList<>();
-    for (int i = 0; i < count && !tiles.isEmpty(); i++)
-      result.add(tiles.remove(Generation.g(1, tiles.size())));
+    for (int i = 0; i < limit && !tiles.isEmpty(); i++)
+      result.add(tiles.remove(i));
     return result;
   }
 

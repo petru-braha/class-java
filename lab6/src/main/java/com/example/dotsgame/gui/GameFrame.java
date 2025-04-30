@@ -5,6 +5,7 @@ import java.awt.*;
 import com.example.dotsgame.model.GameState;
 
 public class GameFrame extends JFrame {
+
     public GameFrame() {
         super("Dots Game");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

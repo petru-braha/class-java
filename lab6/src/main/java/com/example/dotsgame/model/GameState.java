@@ -4,17 +4,23 @@ import java.util.*;
 import java.io.Serializable;
 
 public class GameState implements Serializable {
+
+    private final Random rand = new Random();
     private List<Dot> dots = new ArrayList<>();
     private List<Line> lines = new ArrayList<>();
     private int currentPlayer = 0;
 
-    public List<Dot> getDots() { return dots; }
-    public List<Line> getLines() { return lines; }
+    public List<Dot> getDots() {
+        return dots;
+    }
+
+    public List<Line> getLines() {
+        return lines;
+    }
 
     public void generateDots(int count, int width, int height) {
         dots.clear();
         lines.clear();
-        Random rand = new Random();
         for (int i = 0; i < count; i++) {
             dots.add(new Dot(rand.nextInt(width - 40) + 20, rand.nextInt(height - 80) + 40));
         }

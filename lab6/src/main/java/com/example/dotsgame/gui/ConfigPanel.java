@@ -4,6 +4,7 @@ import javax.swing.*;
 import com.example.dotsgame.model.GameState;
 
 public class ConfigPanel extends JPanel {
+
     public ConfigPanel(GameState state, GameCanvas canvas) {
         JLabel label = new JLabel("Number of Dots:");
         JTextField field = new JTextField("10", 5);

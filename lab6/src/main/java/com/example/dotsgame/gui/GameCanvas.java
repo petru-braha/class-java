@@ -6,6 +6,7 @@ import java.awt.event.*;
 import com.example.dotsgame.model.*;
 
 public class GameCanvas extends JPanel {
+
     private final GameState state;
     private Dot selectedDot = null;
 
@@ -49,4 +50,3 @@ public class GameCanvas extends JPanel {
         }
     }
 }
-

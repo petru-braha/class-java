@@ -19,13 +19,14 @@ public class Board {
         points + playerScores.getOrDefault(
             player, 0));
 
-    System.out.println(player + " submitted: " + word + " (" + points + " points)");
+    System.out.printf("%s submitted %s ( %d points)%n",
+        player, word, points);
   }
 
   public void showWinner() {
 
     if (playerScores.isEmpty()) {
-      System.out.println("no winner");
+      System.out.printf("no winner%n");
       return;
     }
 

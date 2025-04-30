@@ -7,6 +7,7 @@ import com.example.dotsgame.utils.ImageExporter;
 import java.awt.event.*;
 
 public class ControlPanel extends JPanel {
+
     public ControlPanel(GameState state, GameCanvas canvas, JFrame frame) {
         JButton save = new JButton("Save");
         JButton load = new JButton("Load");

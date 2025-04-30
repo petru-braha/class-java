@@ -2,7 +2,7 @@ package com.example.dotsgame.model;
 
 import java.awt.*;
 
-public class Dot extends Point implements java.io.Serializable {
+public class Dot extends Point {
     public Dot(int x, int y) {
         super(x, y);
     }

@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.io.*;
 
 public class Serializer {
+
     public static void saveState(GameState state) {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("savegame.ser"))) {
             out.writeObject(state);
@@ -20,5 +21,8 @@ public class Serializer {
             JOptionPane.showMessageDialog(null, "Error loading game.");
             return null;
         }
+    }
+
+    private Serializer() {
     }
 }
