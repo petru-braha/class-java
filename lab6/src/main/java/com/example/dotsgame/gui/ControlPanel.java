@@ -8,6 +8,7 @@ import com.example.dotsgame.utils.ImageExporter;
 public class ControlPanel extends JPanel {
 
     public ControlPanel(GameState state, GameCanvas canvas, JFrame frame) {
+
         JButton save = new JButton("Save");
         JButton load = new JButton("Load");
         JButton export = new JButton("Export PNG");
