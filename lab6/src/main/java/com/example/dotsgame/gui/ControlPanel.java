@@ -4,7 +4,6 @@ import javax.swing.*;
 import com.example.dotsgame.model.GameState;
 import com.example.dotsgame.utils.Serializer;
 import com.example.dotsgame.utils.ImageExporter;
-import java.awt.event.*;
 
 public class ControlPanel extends JPanel {
 

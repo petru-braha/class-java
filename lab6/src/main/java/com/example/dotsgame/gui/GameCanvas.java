@@ -11,12 +11,13 @@ public class GameCanvas extends JPanel {
     private Dot selectedDot = null;
 
     public GameCanvas(GameState state) {
+
         this.state = state;
         setBackground(Color.WHITE);
 
         addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
-                for (Dot d : state.getDots()) {
+                for (Dot d : state.getDots())
                     if (d.contains(e.getPoint())) {
                         if (selectedDot == null) {
                             selectedDot = d;
@@ -27,7 +28,6 @@ public class GameCanvas extends JPanel {
                         }
                         break;
                     }
-                }
             }
         });
     }
