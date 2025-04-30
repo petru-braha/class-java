@@ -2,13 +2,11 @@ package com.lab7;
 
 import java.util.Set;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Optional;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 class Player extends Thread {
@@ -68,7 +66,7 @@ class Player extends Thread {
 
   private List<Tile> replaceTiles(List<Tile> hand, int usedCount) {
     List<Tile> newHand = new ArrayList<>(hand.subList(usedCount, hand.size()));
-    newHand.addAll(bag.extractTiles(usedCount));
+    newHand.addAll(game.getBag().extractTiles(usedCount));
     return newHand;
   }
 
@@ -93,32 +91,6 @@ class Player extends Thread {
       permute(tiles, index + 1, results);
       Collections.swap(tiles, i, index);
     }
-  }
-}
-
-class Board {
-
-  private final Map<String, Integer> playerScores = new ConcurrentHashMap<>();
-  private final Bag bag;
-
-  public Board(final Bag bag) {
-    this.bag = bag;
-  }
-
-  public synchronized void submitWord(String player, String word, int points) {
-    playerScores.put(
-        player, playerScores.getOrDefault(player, 0) + points);
-    System.out.println(player + " submitted: " + word + " (" + points + " points)");
-  }
-
-  public void showWinner() {
-    playerScores.entrySet().stream()
-        .max(Map.Entry.comparingByValue())
-        .ifPresent(e -> System.out.println("🏆 Winner: " + e.getKey() + " with " + e.getValue() + " points!"));
-  }
-
-  public Bag getBag() {
-    return bag;
   }
 }
 
