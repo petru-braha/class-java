@@ -1,13 +1,16 @@
 package org;
 
-import java.sql.*;
+import java.sql.SQLException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.Optional;
 
 public class ContinentDAO implements DaoContinent {
 
   public void create(Continent continent) throws SQLException {
 
-    String sql = "INSERT INTO continents (name) VALUES (?)";
+    String sql = "INSERT INTO continent (name) VALUES (?)";
     try (Connection conn = DatabaseManager.getInstance().getConnection();
         PreparedStatement stmt = conn.prepareStatement(sql)) {
       stmt.setString(1, continent.name());
@@ -17,7 +20,7 @@ public class ContinentDAO implements DaoContinent {
 
   public Optional<Continent> findById(int id) throws SQLException {
 
-    String sql = "SELECT * FROM continent WHERE id = ?";
+    String sql = "SELECT id, name FROM continent WHERE id = ?";
     try (Connection conn = DatabaseManager.getInstance().getConnection();
         PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -37,7 +40,7 @@ public class ContinentDAO implements DaoContinent {
 
   public Optional<Continent> findByName(String name) throws SQLException {
 
-    String sql = "SELECT * FROM continent WHERE name = ?";
+    String sql = "SELECT id, name FROM continent WHERE name = ?";
 
     try (Connection conn = DatabaseManager.getInstance().getConnection();
         PreparedStatement stmt = conn.prepareStatement(sql)) {

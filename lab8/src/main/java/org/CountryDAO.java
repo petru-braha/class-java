@@ -10,7 +10,7 @@ public class CountryDAO implements DaoCountry {
 
   public void create(Country country) throws SQLException {
 
-    String sql = "INSERT INTO countries (name, code, idContinent) VALUES (?, ?, ?)";
+    String sql = "INSERT INTO country (name, code, idContinent) VALUES (?, ?, ?)";
     try (Connection conn = DatabaseManager.getInstance().getConnection();
         PreparedStatement stmt = conn.prepareStatement(sql)) {
 
