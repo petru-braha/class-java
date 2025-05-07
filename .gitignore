@@ -8,8 +8,8 @@
 /dataSources/
 /dataSources.local.xml
 
-/.vscode/*
-/.idea/*
-/**/*.json
-/**/*.out
-/**/*.class
+**/.vscode/*
+**/.idea/*
+**/*.json
+**/*.out
+**/*.class
