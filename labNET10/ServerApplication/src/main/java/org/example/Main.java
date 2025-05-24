@@ -10,7 +10,8 @@ public class Main {
   public static final int PORT_MAXIMUM = 65535;
 
   public static boolean available(int port) {
-    if (port < MIN_PORT_NUMBER || port > MAX_PORT_NUMBER) {
+
+    if (port < PORT_DEFAULT || port > PORT_MAXIMUM) {
       throw new IllegalArgumentException("Invalid start port: " + port);
     }
 
@@ -29,7 +30,11 @@ public class Main {
       }
 
       if (ss != null)
-        ss.close();
+        try {
+          ss.close();
+        } catch (IOException e) {
+          System.out.printf("%s%n", e.getMessage());
+        }
     }
 
     return false;
@@ -38,14 +43,14 @@ public class Main {
   public static void main(String[] args) {
 
     int port = PORT_DEFAULT;
-    for (; !available(port) || port < PORT_MAXIMUM; port++)
+    for (; !available(port) && port < PORT_MAXIMUM; port++)
       ;
     if (port >= PORT_MAXIMUM) {
       System.out.printf("error: not port available.%n");
-      exit(-1);
     }
 
-    try (GameServer game = new GameServer(PORT_DEFAULT)) {
+    try {
+      GameServer game = new GameServer(PORT_DEFAULT);
       game.start();
     } catch (IOException e) {
       e.printStackTrace();

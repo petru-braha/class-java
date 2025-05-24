@@ -25,7 +25,7 @@ public class GameServer {
     while (isRunning) {
 
       try {
-        new ClientThread(serverSocket.accept(), this).run();
+        new ClientThread(serverSocket.accept(), this).start();
 
       } catch (IOException e) {
         if (!isRunning)

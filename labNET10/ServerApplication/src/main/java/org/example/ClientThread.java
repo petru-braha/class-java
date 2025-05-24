@@ -5,7 +5,6 @@ import java.net.Socket;
 
 import java.util.Set;
 import java.util.HashSet;
-import org.example.CommandList;
 
 public class ClientThread extends Thread {
 
