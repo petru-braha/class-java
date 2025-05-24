@@ -1,0 +1,26 @@
+- localhost:1234 with TCP
+- 11x11
+- 1v1
+
+- client
+  - reads input
+  - sends input
+  - reads output
+  
+  - help() // prints commands
+  - phex() // place a hex
+  - exit() // resigns
+  - stop()
+
+- server
+  - listens for connection
+  - receive connection
+    - creates thread
+    - connects thread
+
+  - table() - data structure to store the table
+  - start() - manual
+  - stop() - client action
+  - time() - measure the time of each player
+
+- thread
